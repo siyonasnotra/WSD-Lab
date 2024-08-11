@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gym Locations</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .leaflet-routing-container {
+            background-color: white !important; /* Solid white background */
+            opacity: 1 !important; /* Remove transparency */
+            width: 500px !important; /* Adjust the width */
+            max-height: 400px !important; /* Adjust the height */
+            overflow-y: auto; /* Enable scrolling if content overflows */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Optional: add some shadow for better visibility */
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        function loadXMLDoc(filename) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open("GET", filename, false);
+            xhttp.send();
+            return xhttp.responseXML;
+        }
+
+        function displayTable() {
+            var xmlDoc = loadXMLDoc("gyms.xml");
+            var table = "<tr><th>Gym ID</th><th>Name</th><th>Location</th><th>Opening Hours</th><th>Facilities</th></tr>";
+            var gyms = xmlDoc.getElementsByTagName("gym");
+
+            for (var i = 0; i < gyms.length; i++) {
+                var gymID = gyms[i].getElementsByTagName("branchID")[0].childNodes[0].nodeValue;
+                var name = gyms[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+                var location = gyms[i].getElementsByTagName("city")[0].childNodes[0].nodeValue + ", " + gyms[i].getElementsByTagName("state")[0].childNodes[0].nodeValue;
+                var hours = gyms[i].getElementsByTagName("hours")[0].childNodes[0].nodeValue;
+                var facilities = gyms[i].getElementsByTagName("description")[0].childNodes[0].nodeValue;
+
+                table += "<tr><td>" + gymID + "</td><td>" + name + "</td><td>" + location + "</td><td>" + hours + "</td><td>" + facilities + "</td></tr>";
+            }
+
+            document.getElementById("gymTable").innerHTML = table;
+        }
+
+        function initMap() {
+            var map = L.map('map').setView([20.5937, 78.9629], 5); // Center map on India
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var geocoder = L.Control.Geocoder.nominatim();
+            var routeControl = L.Routing.control({
+                waypoints: [],
+                routeWhileDragging: true,
+                createMarker: function() { return null; }, // Hide default markers
+            }).addTo(map);
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var startLat = position.coords.latitude;
+                var startLng = position.coords.longitude;
+                var start = L.latLng(startLat, startLng);
+
+                L.marker(start).addTo(map)
+                    .bindPopup('Your Location')
+                    .openPopup();
+
+                var xmlDoc = loadXMLDoc("gyms.xml");
+                var gyms = xmlDoc.getElementsByTagName("gym");
+                for (var i = 0; i < gyms.length; i++) {
+                    var location = gyms[i].getElementsByTagName("city")[0].childNodes[0].nodeValue + ", " + gyms[i].getElementsByTagName("state")[0].childNodes[0].nodeValue;
+                    geocoder.geocode(location, function(results) {
+                        if (results.length > 0) {
+                            var end = L.latLng(results[0].center.lat, results[0].center.lng);
+                            L.marker(end).addTo(map)
+                                .bindPopup(location)
+                                .openPopup();
+
+                            routeControl.setWaypoints([start, end]);
+                            map.fitBounds([start, end]);
+                        }
+                    });
+                }
+            }, function(error) {
+                console.error('Error getting location:', error);
+            });
+        }
+    </script>
+</head>
+<body onload="displayTable(); initMap();">
+    <h1>Gym Locations</h1>
+    <table id="gymTable"></table>
+    <div id="map"></div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<gyms xmlns="http://www.gymmanagement.com/gyms">
+    <gym>
+        <branchID>G001</branchID>
+        <name>Fitness First</name>
+        <city>Mumbai</city>
+        <state>Maharashtra</state>
+        <address>123, Andheri West</address>
+        <contact>+91-1234567890</contact>
+        <hours>6 AM - 10 PM</hours>
+        <description>State-of-the-art facilities with professional trainers.</description>
+    </gym>
+    <gym>
+        <branchID>G002</branchID>
+        <name>FUERZA</name>
+        <city>Bangalore</city>
+        <state>Karnataka</state>
+        <address>456, Koramangala</address>
+        <contact>+91-9876543210</contact>
+        <hours>5 AM - 11 PM</hours>
+        <description>Top-notch equipment and personalized training plans.</description>
+    </gym>
+    <gym>
+        <branchID>G003</branchID>
+        <name>Core Fitness</name>
+        <city>Delhi</city>
+        <state>Delhi</state>
+        <address>789, Janakpuri</address>
+        <contact>+91-1122334455</contact>
+        <hours>24/7</hours>
+        <description>Modern gym facilities with a variety of fitness programs.</description>
+    </gym>
+    <gym>
+        <branchID>G004</branchID>
+        <name>Anytime Fitness</name>
+        <city>Jalandhar</city>
+        <state>Punjab</state>
+        <address>101, Transport Nagar</address>
+        <contact>+91-9988776655</contact>
+        <hours>24/7</hours>
+        <description>24/7 gym access with comprehensive fitness solutions.</description>
+    </gym>
+</gyms>

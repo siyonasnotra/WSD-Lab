@@ -1,0 +1,10 @@
+<!ELEMENT gyms (gym+)>
+<!ATTLIST gyms xmlns CDATA #FIXED "http://www.gymmanagement.com/gyms">
+<!ELEMENT gym (branchID, name, city, state, address, contact, description)>
+<!ELEMENT branchID (#PCDATA)>
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT city (#PCDATA)>
+<!ELEMENT state (#PCDATA)>
+<!ELEMENT address (#PCDATA)>
+<!ELEMENT contact (#PCDATA)>
+<!ELEMENT description (#PCDATA)>
