@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.gymmanagement.com/gyms"
+           targetNamespace="http://www.gymmanagement.com/gyms"
+           elementFormDefault="qualified">
+
+    <xs:element name="gyms">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="gym" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="phone" type="xs:string"/>
+                            <xs:element name="email" type="xs:string"/>
+                            <xs:element name="address" type="xs:string"/>
+                            <xs:element name="openingHours" type="xs:string"/>
+                            <xs:element name="facilities" type="xs:string"/>
+                            <xs:element name="longitude" type="xs:decimal"/>
+                            <xs:element name="latitude" type="xs:decimal"/>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

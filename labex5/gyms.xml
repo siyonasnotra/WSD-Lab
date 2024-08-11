@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="transform.xsl"?>
+<gyms xmlns="http://www.gymmanagement.com/gyms">
+
+    <gym id="g1">
+        <name>Fitness First</name>
+        <phone>123-456-7890</phone>
+        <email>contact@fitnessfirst.com</email>
+        <address>123 Fitness Street, Fit City</address>
+        <openingHours>Mon-Fri: 6 AM - 10 PM, Sat-Sun: 8 AM - 8 PM</openingHours>
+        <facilities>Cardio, Weight Training, Swimming Pool, Yoga Classes</facilities>
+        <longitude>45.123456</longitude>
+        <latitude>-75.123456</latitude>
+    </gym>
+
+    <gym id="g2">
+        <name>Body Works</name>
+        <phone>987-654-3210</phone>
+        <email>info@bodyworks.com</email>
+        <address>456 Muscle Lane, Workout Town</address>
+        <openingHours>Mon-Fri: 5 AM - 11 PM, Sat-Sun: 7 AM - 9 PM</openingHours>
+        <facilities>Cardio, Weight Training, Sauna, Group Classes</facilities>
+        <longitude>46.654321</longitude>
+        <latitude>-76.654321</latitude>
+    </gym>
+
+    <gym id="g3">
+        <name>Peak Performance</name>
+        <phone>234-567-8901</phone>
+        <email>support@peakperformance.com</email>
+        <address>789 Performance Avenue, Peak City</address>
+        <openingHours>Mon-Fri: 6 AM - 9 PM, Sat-Sun: 9 AM - 7 PM</openingHours>
+        <facilities>Cardio, Weight Training, Personal Training, Indoor Track</facilities>
+        <longitude>47.234567</longitude>
+        <latitude>-77.234567</latitude>
+    </gym>
+
+    <gym id="g4">
+        <name>Strength Studio</name>
+        <phone>345-678-9012</phone>
+        <email>hello@strengthstudio.com</email>
+        <address>101 Strength Street, Muscle Town</address>
+        <openingHours>Mon-Fri: 7 AM - 10 PM, Sat-Sun: 8 AM - 6 PM</openingHours>
+        <facilities>Weight Training, Cardio, Swimming Pool, Yoga Classes</facilities>
+        <longitude>48.345678</longitude>
+        <latitude>-78.345678</latitude>
+    </gym>
+
+    <gym id="g5">
+        <name>Active Life</name>
+        <phone>456-789-0123</phone>
+        <email>contact@activelife.com</email>
+        <address>202 Active Drive, Health City</address>
+        <openingHours>Mon-Fri: 6 AM - 11 PM, Sat-Sun: 9 AM - 8 PM</openingHours>
+        <facilities>Cardio, Weight Training, Basketball Court, Spa</facilities>
+        <longitude>49.456789</longitude>
+        <latitude>-79.456789</latitude>
+    </gym>
+
+</gyms>
