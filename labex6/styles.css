@@ -1,0 +1,73 @@
+/* General Form Styles */
+form {
+    width: 300px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:disabled {
+    background-color: #ccc;
+}
+
+/* Validation States */
+input.valid {
+    border-color: green;
+}
+
+input.invalid {
+    border-color: red;
+}
+
+/* Error and Success Messages */
+.error-message {
+    display: none;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+span.invalid {
+    color: red;
+    display: inline-block;
+}
+
+span.valid {
+    color: green;
+    display: inline-block;
+}
+
+/* Center-align the h2 tag */
+h2 {
+    text-align: center;
+    margin-top: 20px; /* Optional: add some top margin for spacing */
+    font-family: Arial, sans-serif; /* Optional: choose a specific font */
+    font-size: 24px; /* Optional: set the font size */
+    color: #333; /* Optional: change the color */
+}
