@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Book Catalogue</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Book Catalogue</h1>
+    </header>
+    
+    <div class="filters">
+        <div>
+            <label for="search">Search:</label>
+            <input type="text" id="search" placeholder="Search by title or author">
+        </div>
+        <div>
+            <label for="sort">Sort by:</label>
+            <select id="sort">
+                <option value="title">Title</option>
+                <option value="author">Author</option>
+            </select>
+        </div>
+    </div>
+    
+    <div id="book-list"></div>
+
+    <div id="pagination">
+        <button id="prev-page">Previous</button>
+        <span id="page-info"></span>
+        <button id="next-page">Next</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
