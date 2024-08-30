@@ -1,6 +1,6 @@
 let books = [];
 let currentPage = 1;
-const booksPerPage = 6;
+const booksPerPage = 7;
 const bookList = document.getElementById('book-list');
 const prevPageButton = document.getElementById('prev-page');
 const nextPageButton = document.getElementById('next-page');
@@ -39,12 +39,11 @@ function renderBooks() {
             bookElement.classList.add('book');
 
             bookElement.innerHTML = `
-                
                 <img src="${book.image}" alt="${book.title} cover" class="book-cover">
                 <div class="book-details">
-                    <h3>${book.title}</h3>
-                    <p><strong>Author:</strong> ${book.author}</p>
-                    <p><strong>Year:</strong> ${book.year}</p>
+                    <h3 class="book-title">${book.title}</h3>
+                    <p class="book-author"><strong>Author:</strong> ${book.author}</p>
+                    <p class="book-year"><strong>Year:</strong> ${book.year}</p>
                 </div>
             `;
 
@@ -62,7 +61,6 @@ function filterBooks() {
         book.author.toLowerCase().includes(searchTerm)
     );
 }
-
 
 function sortBooks(filteredBooks) {
     const sortOption = document.getElementById('sort').value;

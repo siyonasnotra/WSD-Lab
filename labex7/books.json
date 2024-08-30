@@ -30,26 +30,10 @@
         "image": "images/catcher_in_the_rye.jpg"
     },
     {
-        "title": "Harry Potter and the Stone",
+        "title": "Harry Potter and the Sorcerer's Stone",
         "author": "J.K. Rowling",
         "year": 1997,
         "image": "images/harry_potter.jpg"
-    },
-    {
-        "title": "Lolita",
-        "author": " Vladimir Nabokov",
-        "year": 1955,
-        "image": "images/lolita.jpg"
-    },{
-        "title": "It Ends With Us",
-        "author": "Colleen Hoover",
-        "year": 2016,
-        "image": "images/it_endswithus.jpg"
-    },{
-        "title": "Atomic Habits",
-        "author": "James Clear",
-        "year": 2018,
-        "image": "images/atomichabits.jpg"
     },
     {
         "title": "The Lord of the Rings",
