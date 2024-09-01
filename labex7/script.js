@@ -1,88 +1,155 @@
-let books = [];
-let currentPage = 1;
-const booksPerPage = 7;
-const bookList = document.getElementById('book-list');
-const prevPageButton = document.getElementById('prev-page');
-const nextPageButton = document.getElementById('next-page');
-const pageInfo = document.getElementById('page-info');
+document.addEventListener('DOMContentLoaded', function () {
+    let booksData = [];
+    let currentPage = 1;
+    const booksPerPage = 5;
 
-document.getElementById('search').addEventListener('input', renderBooks);
-document.getElementById('sort').addEventListener('change', renderBooks);
-prevPageButton.addEventListener('click', () => changePage(-1));
-nextPageButton.addEventListener('click', () => changePage(1));
+    function fetchBooks(subjectName) {
+        const apiUrl = `https://openlibrary.org/subjects/${subjectName}.json`;
 
-function fetchBooks() {
-    fetch('books.json')
-        .then(response => response.json())
-        .then(data => {
-            books = data;
-            renderBooks();
-        })
-        .catch(error => {
-            bookList.innerHTML = '<p id="error-message">Failed to load books. Please try again later.</p>';
-            console.error('Error fetching books:', error);
-        });
-}
-
-function renderBooks() {
-    const filteredBooks = filterBooks();
-    const sortedBooks = sortBooks(filteredBooks);
-    const paginatedBooks = paginateBooks(sortedBooks);
-
-    bookList.innerHTML = '';
-
-    if (paginatedBooks.length === 0) {
-        bookList.innerHTML = '<p>No books found.</p>';
-    } else {
-        paginatedBooks.forEach(book => {
-            const bookElement = document.createElement('div');
-            bookElement.classList.add('book');
-
-            bookElement.innerHTML = `
-                <img src="${book.image}" alt="${book.title} cover" class="book-cover">
-                <div class="book-details">
-                    <h3 class="book-title">${book.title}</h3>
-                    <p class="book-author"><strong>Author:</strong> ${book.author}</p>
-                    <p class="book-year"><strong>Year:</strong> ${book.year}</p>
-                </div>
-            `;
-
-            bookList.appendChild(bookElement);
-        });
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                booksData = data.works || [];
+                currentPage = 1;
+                displayBooks(booksData, currentPage);
+                updatePagination();
+            })
+            .catch(error => {
+                console.error('Error fetching books:', error);
+                document.getElementById('book-table-container').innerHTML = '<p>Sorry, there was an error fetching the books.</p>';
+            });
     }
 
-    updatePaginationInfo(filteredBooks.length);
-}
+    function displayBooks(books, page) {
+        const bookTableContainer = document.getElementById('book-table-container');
+        bookTableContainer.innerHTML = '';
 
-function filterBooks() {
-    const searchTerm = document.getElementById('search').value.toLowerCase();
-    return books.filter(book =>
-        book.title.toLowerCase().includes(searchTerm) ||
-        book.author.toLowerCase().includes(searchTerm)
-    );
-}
+        if (books.length === 0) {
+            bookTableContainer.innerHTML = '<p>No books found.</p>';
+            return;
+        }
 
-function sortBooks(filteredBooks) {
-    const sortOption = document.getElementById('sort').value;
-    return filteredBooks.sort((a, b) => a[sortOption].localeCompare(b[sortOption]));
-}
+        const table = document.createElement('table');
+        table.classList.add('table', 'table-striped', 'table-bordered');
 
-function paginateBooks(sortedBooks) {
-    const start = (currentPage - 1) * booksPerPage;
-    return sortedBooks.slice(start, start + booksPerPage);
-}
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
 
-function updatePaginationInfo(totalBooks) {
-    const totalPages = Math.ceil(totalBooks / booksPerPage);
-    pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+        const headers = ['Cover', 'Title', 'Author(s)', 'First Published Year', 'Get Details'];
+        headers.forEach(headerText => {
+            const th = document.createElement('th');
+            th.textContent = headerText;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
 
-    prevPageButton.disabled = currentPage === 1;
-    nextPageButton.disabled = currentPage === totalPages;
-}
+        const tbody = document.createElement('tbody');
+        const startIndex = (page - 1) * booksPerPage;
+        const endIndex = startIndex + booksPerPage;
+        const booksToShow = books.slice(startIndex, endIndex);
 
-function changePage(direction) {
-    currentPage += direction;
-    renderBooks();
-}
+        booksToShow.forEach(book => {
+            const row = document.createElement('tr');
 
-fetchBooks();
+            // Cover Image Cell
+            const coverCell = document.createElement('td');
+            const coverImage = document.createElement('img');
+            coverImage.src = book.cover_id ? `https://covers.openlibrary.org/b/id/${book.cover_id}-M.jpg` : 'https://via.placeholder.com/100x150?text=No+Cover';
+            coverImage.alt = book.title;
+            coverImage.style.width = '100px';
+            coverImage.style.height = '150px';
+            coverCell.appendChild(coverImage);
+            row.appendChild(coverCell);
+
+            // Title Cell
+            const titleCell = document.createElement('td');
+            titleCell.textContent = book.title;
+            row.appendChild(titleCell);
+
+            // Author(s) Cell
+            const authorCell = document.createElement('td');
+            authorCell.textContent = book.authors ? book.authors.map(author => author.name).join(', ') : 'Unknown';
+            row.appendChild(authorCell);
+
+            // Year Cell
+            const yearCell = document.createElement('td');
+            yearCell.textContent = book.first_publish_year || 'N/A';
+            row.appendChild(yearCell);
+
+            // Details Button Cell
+            const detailsCell = document.createElement('td');
+            const detailsButton = document.createElement('button');
+            detailsButton.classList.add('btn', 'btn-info', 'book-detail');
+            detailsButton.textContent = 'Click Me';
+            detailsButton.addEventListener('click', function () {
+                if (book.key) {
+                    window.open(`https://openlibrary.org${book.key}`);
+                }
+            });
+            detailsCell.appendChild(detailsButton);
+            row.appendChild(detailsCell);
+
+            tbody.appendChild(row);
+        });
+
+        table.appendChild(tbody);
+        bookTableContainer.appendChild(table);
+    }
+
+    function updatePagination() {
+        const paginationContainer = document.getElementById('pagination-container');
+        paginationContainer.innerHTML = '';
+
+        const totalPages = Math.ceil(booksData.length / booksPerPage);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.classList.add('btn', 'btn-secondary', 'me-2');
+            pageButton.addEventListener('click', function () {
+                currentPage = i;
+                displayBooks(booksData, currentPage);
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+    }
+
+    const searchForm = document.querySelector('form');
+    searchForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const subjectName = searchForm.querySelector('input[type="search"]').value;
+        if (subjectName) {
+            fetchBooks(subjectName);
+        }
+    });
+
+    const sortOptions = document.querySelectorAll('.sort-option');
+    sortOptions.forEach(option => {
+        option.addEventListener('click', function () {
+            const sortBy = this.getAttribute('data-sort');
+            if (sortBy === 'title') {
+                booksData.sort((a, b) => a.title.localeCompare(b.title));
+            } else if (sortBy === 'year') {
+                booksData.sort((a, b) => a.first_publish_year - b.first_publish_year);
+            }
+            displayBooks(booksData, currentPage);
+        });
+    });
+
+    document.getElementById('filterButton').addEventListener('click', function () {
+        const yearFrom = parseInt(document.getElementById('yearFrom').value, 10) || 0;
+        const yearTo = parseInt(document.getElementById('yearTo').value, 10) || new Date().getFullYear();
+        const filteredBooks = booksData.filter(book => book.first_publish_year >= yearFrom && book.first_publish_year <= yearTo);
+        displayBooks(filteredBooks, currentPage);
+        updatePagination();
+    });
+
+    // Remove the default fetch call
+    // fetchBooks('fiction');
+});
