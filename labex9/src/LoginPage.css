@@ -1,0 +1,90 @@
+/* Set a pastel background color for the entire page */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f8e8e0; /* Pastel peach background */
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url("https://wallpapersafari.com/w/YJfcdP");
+}
+
+/* Container for the login form */
+.login-container {
+  background-color: #1d1d1d; /* Bold solid black background */
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  width: 400px;
+  max-width: 100%;
+  text-align: center;
+  border: 2px solid #FF4500; /* Bold orange border */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Title */
+h2 {
+  font-size: 32px;
+  color: #FF4500; /* Bright orange title */
+  margin-bottom: 20px;
+}
+
+/* Input fields */
+.input-group {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #FFF; /* White labels for good contrast */
+}
+
+input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  background-color: #333; /* Dark gray input background */
+  color: white; /* White text for contrast */
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+  border-color: #FF4500; /* Orange border on focus */
+  outline: none;
+}
+
+/* Button styling */
+.login-button {
+  background-color: #FF4500; /* Bold orange button */
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s;
+}
+
+.login-button:hover {
+  background-color: #e03e00; /* Darker orange on hover */
+  transform: translateY(-3px); /* Button rises slightly on hover */
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Slight zoom effect on form hover */
+.login-container:hover {
+  transform: scale(1.05);
+}
